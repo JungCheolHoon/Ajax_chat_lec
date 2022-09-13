@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Title</title>
+<style>
+#result {
+	margin-left: 5px;
+	border: 1px solid;
+	border-right: 0px solid;
+	border-left: 0px solid;
+	width: 100px;
+}
+
+#div {
+	border: 1px solid;
+	width: 90px;
+}
+</style>
+<script>
+	var disp = " ";
+	var firstNum = null;
+	var secondNum = "";
+	var sym = null;
+	// document.write(eval());
+	function display(num) {
+		if (num != "/" && num != "*" && num != "+" && num != "-" && num != "=") {
+			disp += num;
+			//$("#result").text(disp);
+			document.getElementById("result").innerHTML = disp;
+		} else {
+			disp = " ";
+			document.getElementById("result").innerHTML = disp;
+		}
+	}
+
+	function cal(symbol) {
+		if (symbol == "clear") {
+			disp = " ";
+			firstNum = null;
+			secondNum = "";
+			document.getElementById("result").innerHTML = disp;
+			sym = null;
+		} else if (symbol == "/" || symbol == "*" || symbol == "+"
+				|| symbol == "-" || symbol == "=") {
+			if (firstNum == null) {
+				firstNum = secondNum;
+			} else if (sym == "/") {
+				firstNum = Number(firstNum) / Number(secondNum);
+			} else if (sym == "*") {
+				firstNum = Number(firstNum) * Number(secondNum);
+			} else if (sym == "+") {
+				firstNum = Number(firstNum) + Number(secondNum);
+			} else if (sym == "-") {
+				firstNum = Number(firstNum) - Number(secondNum);
+			}
+			if (symbol == "=") {
+				document.getElementById("result").innerHTML = firstNum;
+				disp = firstNum;
+			}
+			sym = symbol;
+			secondNum = "";
+		} else {
+			if (sym == "=") {
+				disp = firstNum;
+				document.getElementById("result").innerHTML = "부호를 입력해주세요";
+			} else {
+				secondNum = secondNum + symbol;
+				if (secondNum == "00") {
+					secondNum = secondNum.slice(0, -1);
+					disp = disp.slice(0, -1);
+					document.getElementById("result").innerHTML = disp;
+				} else if (secondNum == ("0" + symbol)) {
+					disp = disp.slice(0, 1);
+					document.getElementById("result").innerHTML = disp;
+				}
+			}
+		}
+	}
+</script>
+
+
+<style>
+</style>
+</head>
+<body>
+	<div>
+		<ul>
+			<p id="div">
+				<span id="result">0</span>
+			</p>
+		</ul>
+		<ul>
+			<button onclick="display('1');cal('1');"; >1</button>
+			<button onclick="display('2');cal('2');">2</button>
+			<button onclick="display('3');cal('3');">3</button>
+			<button onclick="cal('/');display('/');">/</button>
+		</ul>
+		<ul>
+			<button onclick="display('4');cal('4');">4</button>
+			<button onclick="display('5');cal('5');">5</button>
+			<button onclick="display('6');cal('6');">6</button>
+			<button onclick="cal('*');display('*');">*</button>
+		</ul>
+		<ul>
+			<button onclick="display('7');cal('7');">7</button>
+			<button onclick="display('8');cal('8');">8</button>
+			<button onclick="display('9');cal('9');">9</button>
+			<button onclick="cal('+');display('+');">+</button>
+		</ul>
+		<ul>
+			<button onclick="display('0');cal('0');">0</button>
+			<button onclick="cal('clear');">clear</button>
+			<button onclick="cal('-');display('-');">-</button>
+		</ul>
+		<ul>
+			<button onclick="cal('=');">enter</button>
+		</ul>
+
+	</div>
+
+</body>
+</html>
